@@ -7,9 +7,17 @@
 
 class GameCore {
     let isRunning = false
+    let device: GameDevice
+    let maxTurn: Int = 20
     
-    func foo() {
-        print("foobar")
+    let world: World
+    let player: [Player]
+    
+    
+    init(device: GameDevice) {
+        self.device = device
+        self.world = World()
+        self.player = []
     }
     
 //    printTurnHeader()
@@ -70,6 +78,8 @@ class GameCore {
         //```
     }
     
+    
+    
     func initializeGame() {
         print("initializeGame")
         
@@ -92,6 +102,18 @@ class GameCore {
         //```
     }
     
+    func worldInitialize() -> Bool {
+        print("worldInitialize")
+        
+        return false
+    }
+    
+    func playerInitialize() -> Bool {
+        print("playerInitialize")
+        
+        return false
+    }
+    
     func printTurnHeader() {
         print("printTurnHeader")
         
@@ -104,7 +126,7 @@ class GameCore {
         //
     }
 
-    func drawWorldEvent() -> String {
+    func drawWorldEvent() -> WorldEvent {
         print("drawWorldEvent")
         
         //# 세계 이벤트 뽑기
@@ -122,7 +144,18 @@ class GameCore {
         //    fail_effect
         //```
         
-        return ""
+        let event = WorldEvent(
+            reqStat: StatusType(rawValue: Int.random(in: 1...3))!,
+            reqValue: Int.random(in: 1...10),
+        )
+        
+        return event
+    }
+    
+    func getHero() -> Hero {
+        let hero = Hero()
+        
+        return hero
     }
     
     func getPlayerInput() -> String {
@@ -146,7 +179,9 @@ class GameCore {
         return ""
     }
     
-    func applyPlayerAction(event: String) {
+//    game.applyPlayerAction(game.getHero() as Hero, Card(type: CardType.choice1))
+
+    func applyPlayerAction(hero: Hero, event: WorldEvent, choice: Card) {
         print("applyPlayerAction")
         
         //# 플레이어 행동 적용
